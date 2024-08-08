@@ -9,4 +9,4 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Starts client
 
 ## npm run json-server
-Start mock server (db.json)
+Starts mock server (db.json)

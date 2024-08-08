@@ -32,7 +32,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/shared/styles/styles.scss"
             ],
             "scripts": []
           },
@@ -91,12 +91,15 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/shared/styles/styles.scss"
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "d8b64552-523d-4f08-943a-41826664a1f1"
   }
 }

@@ -1,0 +1,31 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+@import './orange-palette';
+
+$colors: (
+  "black": #232323,
+  "gray": #6b6b6b,
+  light-gray: #f3f3f7,
+  background: map-get($map: mat.$orange-palette, $key: 90),
+  gray-line: #f6f6f6,
+  "orange": map-get($map: $orange-palette, $key: 40)
+);
+
+
+:root {
+  @each $name, $color in $colors {
+    --#{$name}: #{$color};
+  }
+
+  // scrollbar
+  --scrollbar-border-radius: 15px;
+
+  --scrollbar-thickness: 8;
+
+  --scrollbar-offset: 4;
+
+  --scrollbar-hover-thickness: 10;
+
+  --scrollbar-padding: 0;
+}

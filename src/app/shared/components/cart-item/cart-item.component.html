@@ -1,0 +1,52 @@
+<div class="cart__main__items__product">
+  <div class="cart__main__items__product__top">
+    <button class="cart__main__items__product__top__remove-btn" (click)="remove.emit()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <div class="cart__main__items__product__top__wrapper" (click)="_edit()">
+      <div class="cart__main__items__product__top__column">
+        <img [src]="product.imageUrl" [alt]="product.name" class="cart__main__items__product__top__img" />
+      </div>
+      <div class="cart__main__items__product__top__column" style="width: 100%;">
+        <h3 class="cart__main__items__product__top__product-name">
+          {{ product.name }}
+        </h3>
+        <div class="cart__main__items__product__top__product-props">
+          @if(isCartPizza(product)){
+            {{ product.selected.size }} см, {{ product.selected.type | pizzaProp: 'type' | lowercase }} тесто
+            <div class="cart__main__items__product__top__product-props__ingredients">
+              @if(product.selected.ingredients.length) {
+                +
+                @for(ingredient of product.selected.ingredients; track ingredient.name){
+                  {{ ingredient.name | lowercase }},
+                }
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cart__main__items__product__bottom">
+    <span class="cart__main__items__product__bottom__price">{{ getProductPrice(product) }} ₽</span>
+    <div class="cart__main__items__product__bottom__options">
+      @if(isCartPizza(product)){
+        <button
+          class="cart__main__items__product__bottom__options__edit-product"
+          (click)="edit.emit()"
+        >
+          Изменить
+        </button>
+      }
+      <div class="cart__main__items__product__bottom__options__count">
+        <button class="cart__main__items__product__bottom__options__count__btn decrement" (click)="decrement.emit()">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <span class="cart__main__items__product__bottom__options__count__count">{{ product.selected.count }}</span>
+        <button class="cart__main__items__product__bottom__options__count__btn increment" (click)="increment.emit()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

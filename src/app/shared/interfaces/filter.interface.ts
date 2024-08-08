@@ -1,0 +1,1 @@
+export type IFilter = 'price' | 'rating' | 'alphabet';

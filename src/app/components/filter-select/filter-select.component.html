@@ -1,0 +1,12 @@
+<mat-form-field>
+  <mat-label>Сортировать по:</mat-label>
+  <mat-select>
+    <mat-option (click)="pizzaService.selectFilter$.next(null)">без сортировки</mat-option>
+
+    @for(filter of filters; track filter){
+      <mat-option [value]="filter" (click)="pizzaService.selectFilter$.next(filter)">
+        {{ filter | filterName }}
+      </mat-option>
+    }
+  </mat-select>
+</mat-form-field>

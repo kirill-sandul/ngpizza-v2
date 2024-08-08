@@ -1,0 +1,81 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+@import './orange-palette';
+
+// Define the theme object.
+$ng-pizza-v2-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: $orange-palette,
+    tertiary: mat.$orange-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($ng-pizza-v2-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($ng-pizza-v2-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($ng-pizza-v2-theme);
+@import './fonts';
+@import './vars';
+@import './libs/normalize';
+
+html { scroll-behavior: smooth; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--background);
+  padding: 50px 0;
+  @media (max-width: 768px) {
+    padding: 20px 0;
+  }
+}
+
+.ng-scroll-content {
+  padding: 0 !important;
+}
+
+.wrapper {
+  width: calc(100vw - 100px);
+  background-color: #fff;
+  margin: 0 auto;
+  border-radius: 10px;
+  max-width: 1700px;
+
+  @media (max-width: 768px) {
+    width: calc(100% - 40px);
+  }
+}
+
+.cart-action-snackbar {
+  position: absolute;
+  top: 100px;
+  right: 70px;
+
+  .mdc-snackbar__surface {
+    background-color: rgba(0, 0, 0, 0.70) !important;
+    backdrop-filter: blur(8px);
+  }
+}

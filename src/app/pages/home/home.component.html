@@ -1,0 +1,64 @@
+<div class="content">
+  <!-- <mat-progress-bar
+    mode="indeterminate"
+    class="loader"
+    [class.show]="!pizzaService.productsLoaded()"
+  >
+  </mat-progress-bar> -->
+
+  <div class="container">
+    <div class="content__top">
+      <app-filter-select></app-filter-select>
+    </div>
+    
+    @if(orderPopupService.show() && orderPopupService.product()!) {
+      <app-order-product-popup
+        (onClose)="orderPopupService.closePopup$.next()"
+      ></app-order-product-popup>
+    }
+
+    @if(cartService.show()){
+      <app-cart (onClose)="cartService.closeCart$.next()"></app-cart>
+    }
+
+    <div class="content__items" id="pizzas">
+      <h2 class="content__items__title">Все пиццы</h2>
+      
+      <div class="content__items__wrapper" autoAnimate>
+        @for (pizza of pizzas() | filteredProducts: pizzaService.selectedFilter(); track pizza.id) {
+          <app-product-widget [product]="pizza"></app-product-widget>
+        }
+      </div>
+    </div>
+
+    <div class="content__items" id="breakfast">
+      <h2 class="content__items__title">Завтрак</h2>
+      
+      <div class="content__items__wrapper" autoAnimate>
+        @for (product of breakfast() | filteredProducts: pizzaService.selectedFilter(); track product.id) {
+          <app-product-widget [product]="product"></app-product-widget>
+        }
+      </div>
+    </div>
+
+    <div class="content__items" id="snacks">
+      <h2 class="content__items__title">Закуски</h2>
+    
+      <div class="content__items__wrapper" autoAnimate>
+        @for (product of snacks() | filteredProducts: pizzaService.selectedFilter(); track product.id) {
+          <app-product-widget [product]="product"></app-product-widget>
+        }
+      </div>
+    </div>
+
+    <div class="content__items" id="cocktails">
+      <h2 class="content__items__title">Коктейли</h2>
+    
+      <div class="content__items__wrapper" autoAnimate>
+        @for (product of cocktails() | filteredProducts: pizzaService.selectedFilter(); track product.id) {
+          <app-product-widget [product]="product"></app-product-widget>
+        }
+      </div>
+    </div>
+  </div>
+</div>

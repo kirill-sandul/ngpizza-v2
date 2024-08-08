@@ -1,0 +1,128 @@
+<div class="order-popup close-zone" [class.opacity]="wrapperAnim">
+  <div class="order-popup__container" [class.scale]="wrapperAnim">
+    <button class="order-popup__close_btn">
+      <mat-icon class="close-zone">close</mat-icon>
+    </button>
+    <div class="order-popup__wrapper" (clickOutside)="close()">
+      <div class="order-popup__column product-column">
+        <img
+        [src]="product.imageUrl"
+        [alt]="product.name"
+        class="order-popup__product-image"
+        [class.order-popup__product-image--25]="selectedPizza.size === 25"
+        [class.order-popup__product-image--30]="selectedPizza.size === 30"
+        [class.order-popup__product-image--35]="selectedPizza.size === 35"
+      >
+      </div>
+      <div class="order-popup__column order-column">
+        <ng-scrollbar>
+          <div class="order-popup__column__wrapper">
+            <div class="order-popup__product-info">
+              <h2 class="order-popup__product-info__name">{{ product.name }}</h2>
+              @if(product | isPizza){
+                <span class="order-popup__product-info__props">
+                  {{ selectedPizza.size }} см,
+                  {{ selectedPizza.type | pizzaProp: 'type' | lowercase }} тесто
+                </span>
+              }
+              @else {
+                <span class="order-popup__product-info__props">
+                  @if(product.capacity) { {{ product.capacity }} л, }
+                  {{ product.weight }} г
+                </span>
+              }
+              <p class="order-popup__product-info__description">
+                {{ product.description }}
+              </p>
+              @if(!(product | isPizza) && product.capacity){
+                <span class="order-popup__product-info__capacity">
+                  {{ product.capacity }} л
+                </span>
+              }
+            </div>
+            @if(product | isPizza){
+              <div class="order-popup__product-selector">
+                <ul>
+                  @for(size of product.sizes; track size){
+                    <li
+                      [class.active]="selectedPizza.size === size"
+                      (click)="selectSize(size)"
+                    >
+                      {{ size | pizzaProp: 'size' }}
+                  </li>
+                  }
+                </ul>
+                <ul>
+                  @for(type of product.types; track type){
+                    <li
+                      [class.active]="selectedPizza.type === type"
+                      [class.disabled]="ifDisableType1(type)"
+                      (click)="selectType(type)"
+                    >
+                      {{ type | pizzaProp: 'type' }}</li>
+                  }
+                </ul>
+              </div>
+              <div class="order-popup__product-ingredients">
+                <h2 class="order-popup__product-ingredients__title">Добавить по вкусу</h2>
+                <div class="order-popup__product-ingredients__list" autoAnimate>
+                  @for(ingredient of ingredients(); track ingredient.name){
+                    <button
+                      class="order-popup__product-ingredients__list__item"
+                      [class.selected]="ifIngredientSelected(ingredient)"
+                      (click)="selectIngredient(ingredient)"
+                    >
+                      <div
+                      class="order-popup__product-ingredients__list__item__checkbox"
+                        [class.selected]="ifIngredientSelected(ingredient)"
+                      >
+                      <mat-icon>task_alt_outline</mat-icon>
+                    </div>
+                      <img
+                        [src]="ingredient.imageUrl"
+                        alt=""
+                        class="order-popup__product-ingredients__list__item__img"
+                        />
+                        <span class="order-popup__product-ingredients__list__item__name">
+                          {{ ingredient.name }}
+                      </span>
+                      <span class="order-popup__product-ingredients__list__item__price">{{ ingredient.price }} ₽</span>
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </ng-scrollbar>
+        <div class="order-popup__column__bottom">
+          @if(product | isPizza){
+            <app-button
+              [class_name]="'order-popup__product-order_btn'"
+              (click)="addToCart()"
+            >
+              @if(fromCart !== null) {
+                Сохранить за {{ getPizzaPrice() }} ₽
+              }
+              @else {
+                В корзину за {{ getPizzaPrice() }} ₽
+              }
+            </app-button>
+          }
+          @else {
+            <app-button
+              [class_name]="'order-popup__product-order_btn'"
+              (click)="addToCart()"
+            >
+              @if(fromCart !== null) {
+                Сохранить за {{ product.price }} ₽
+              }
+              @else {
+                В корзину за {{ product.price }} ₽
+              }
+            </app-button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

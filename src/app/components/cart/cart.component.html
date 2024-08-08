@@ -1,0 +1,49 @@
+<div class="cart" (click)="close($event)">
+  <div class="cart__overlay close-zone" [class.opacity]="wrapperAnim"></div>
+  <div class="cart__container" [class.translate]="wrapperAnim">
+    <button class="cart__close-btn" (click)="close($event)">
+      <mat-icon class="close-zone">close</mat-icon>
+    </button>
+    <div class="cart__wrapper">
+      @if(cartService.totalLength()){
+        <ng-scrollbar>
+          <header class="cart__header">
+            <h2 class="cart__header__total-info">
+              {{ cartService.totalLength() | totalItems }}
+              на {{ cartService.totalPrice() }} ₽
+            </h2>
+          </header>
+          <main class="cart__main">
+            <div class="cart__main__items">
+              @for(product of cartService.products(); track $index){
+                <app-cart-item
+                  [product]="product"
+                  (increment)="incrementProduct($index)"
+                  (decrement)="decrementProduct($index)"
+                  (edit)="editProduct($index)"
+                  (remove)="removeProduct($index)"
+                ></app-cart-item>
+              }
+            </div>
+          </main>
+        </ng-scrollbar>
+        <footer class="cart__footer">
+          <app-button [class_name]="'cart__footer__buy-btn'">К оформлению заказа</app-button>
+        </footer>
+      }
+      @else {
+      <div class="cart__empty-block">
+        <img src="https://cdn.dodostatic.net/site-static/dist/assets/5aa5dac99a832c62f3ef..svg" alt="empty_cart"
+          class="cart__empty-block__img" />
+        <div class="cart__empty-block__text">
+          <h2>Пусто</h2>
+          <p>
+            Ваша корзина пуста, откройте «Меню»
+            и выберите понравившийся товар.
+            Мы доставим ваш заказ от 599 ₽
+          </p>
+        </div>
+      </div>
+      }
+    </div>
+</div>

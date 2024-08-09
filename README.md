@@ -6,6 +6,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Store management combining rxjs and signals
 
 ## npm run start
+Starts client and mock server (db.json)
+
+## npm run client
 Starts client
 
 ## npm run json-server
